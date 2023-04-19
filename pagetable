@@ -1,0 +1,90 @@
+import React, { useState } from 'react';
+import Header from '../../components/header';
+import { CaretRight, CaretLeft } from 'phosphor-react';
+
+const LogAtividades = () => {
+  const dados = [
+    { status: "Ativo", data: "10/04/2023", log: "309288882919347888224444221324423122" },
+    { status: "Inativo", data: "09/04/2023", log: "11193028829320933847582938579233497904271733988238" },
+    { status: "Ativo", data: "08/04/2023", log: "198283020383849248484848482756746110182174916352517" },
+    { status: "Inativo", data: "07/04/2023", log: "48484848234211492810333333335310937000000" },
+    { status: "Ativo", data: "06/04/2023", log: "1920821231231222212482994721291038" },
+   { status: "Ativo", data: "06/04/2023", log: "19208212312312222124829947212912214433038" },
+   { status: "Ativo", data: "06/04/2023", log: "192082123123122222212457889890900245312482994721291038" },
+   { status: "Ativo", data: "06/04/2023", log: "192082123123122222212457889895343519392563362719000900245312482994721291038" },
+  ];
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const pageSize = 5;
+  const totalPages = Math.ceil(dados.length / pageSize);
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentData = dados.slice(startIndex, endIndex);
+
+  return (
+    <div>
+      <div>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet"></link>
+      </div>
+      <Header />
+      <section className='flex items-center justify-center bg-gradient-to-b from-white to-blue-400 w-full  h-screen' >
+        <div className='flex flex-1 flex-col p-8 pt-16'>
+          <h2 className='flex flex-1 flex-col items-start w-40 right-flex text-lg rounded-md' style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
+            Log de Atividades
+          </h2>
+          <table className="bg-white rounded-lg overflow-hidden font-semibold">
+            <thead>
+            <tr className="bg-blue-500">
+              <th className="border p-2 w-1/12" style={{ fontFamily: "'Inter', sans-serif" }}>Status</th>
+              <th className="border p-2 w-1/12" style={{ fontFamily: "'Inter', sans-serif" }}>Data</th>
+              <th className="border p-2 w-10/12" style={{ fontFamily: "'Inter', sans-serif" }}>Log</th>
+            </tr>
+            </thead>
+            <tbody>
+              {currentData.map((item, index) => (
+                <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-300"}>
+                  <td className="border p-2">{item.status}</td>
+                  <td className="border p-2">{item.data}</td>
+                  <td className="py-2 px-4 break-all items-center justify-center">{item.log}</td>
+                </tr>
+              ))}
+      </tbody>
+    </table>
+
+    <div>
+      
+        <div className='flex justify-center py-3'>
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+         className="bg-white text-blue-500 px-3 py-2 rounded-md mr-7 cursor-pointer hover:bg-blue-100">
+         <CaretLeft size={20} />
+        </button>
+        <button
+        onClick={() => setCurrentPage(currentPage + 1)}
+        disabled={endIndex >= dados.length}
+        className="bg-white text-blue-500 px-3 py-2 rounded-md cursor-pointer hover:bg-blue-100">
+          <CaretRight size={20} />
+        </button>
+        </div>
+        </div>
+        </div>
+        
+        </section>
+    </div>
+  );
+};
+
+export default LogAtividades;
